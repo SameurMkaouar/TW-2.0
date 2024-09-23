@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Card</title>
+    <style>
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            padding: 40px 0;
+            margin: 0;
+        }
+
+        /* Card Styling */
+        .author-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Hover Effects on Card */
+        .author-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Image Styling */
+        .author-image img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            transition: filter 0.3s ease;
+        }
+
+        /* Hover Effect on Image */
+        .author-card:hover .author-image img {
+            filter: grayscale(20%);
+        }
+
+        /* Text Styling */
+        .author-details h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .author-details p {
+            font-size: 16px;
+            color: #666;
+            margin: 5px 0;
+            text-align: center;
+        }
+
+        /* Bold Styling for Email */
+        .author-details p:first-of-type {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    {% for author in authors %}
+        {% if id == author.id %}
+            <div class="author-card">
+                <div class="author-image">
+                    <img src="{{ asset(author.picture) }}" alt="{{ author.username }}">
+                </div>
+                <div class="author-details">
+                    <h1>{{ author.username }}</h1>
+                    <p>Email: {{ author.email }}</p>
+                    <p>Number Of Books: {{ author.nb_books }}</p>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>

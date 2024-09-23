@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authors List</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h5 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            max-width: 800px;
+            margin: 40px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f7f7f7;
+            font-weight: 600;
+            color: #555;
+        }
+
+        td {
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Prevent jittery hover with fixed width and height on image cell */
+        td.image-cell {
+            width: 120px;
+            height: 120px;
+            overflow: hidden;
+        }
+
+        /* Image Styling */
+        td.image-cell img {
+            display: block; /* Prevent inline display issues */
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        /* Smooth hover effect */
+        td.image-cell img:hover {
+            transform: scale(1.1);
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Row Styling */
+        .summary-row td {
+            font-weight: bold;
+            background-color: #f7f7f7;
+        }
+
+        p {
+            text-align: center;
+            color: #888;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    {% set total_books = 0 %}
+
+    <h1 style="text-align: center;">Authors List</h1>
+
+    {% if authors is defined and authors|length > 0 %}
+    <table>
+        <tr>
+            <th>Author</th>
+            <th>Picture</th>
+            <th>Details</th>
+        </tr>
+
+        {% for author in authors %}
+        {% set total_books = total_books + author.nb_books %}
+        <tr>
+            <td>
+                <h5>{{ author.username|upper }}</h5>
+            </td>
+            <td class="image-cell">
+                <img src="{{ asset(author.picture) }}" alt="{{ author.username }}">
+            </td>
+            <td>
+                <a href="/library/authorDetails/{{ author.id }}">Show More</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        <!-- Summary Row -->
+        <tr class="summary-row">
+            <td>Author Number: {{ authors|length }}</td>
+            <td colspan="2">Total Books: {{ total_books }}</td>
+        </tr>
+    </table>
+    {% else %}
+        <p>There are no authors available at the moment.</p>
+    {% endif %}
+</body>
+</html>
